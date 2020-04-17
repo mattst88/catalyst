@@ -62,8 +62,8 @@ def parse_config(config_files):
         if opt in option_messages:
             log.info(option_messages[opt])
 
-    for key in ["digests", "envscript", "var_tmpfs_portage", "port_logdir",
-                "local_overlay"]:
+    for key in ["digests", "envscript", "local_overlay", "port_logdir", "repos",
+                "var_tmpfs_portage"]:
         if key in myconf:
             conf_values[key] = myconf[key]
 
@@ -123,11 +123,8 @@ def get_parser():
     """Return an argument parser"""
     epilog = """Usage examples:
 
-Using the commandline option (-C, --cli) to build a Portage snapshot:
-$ catalyst -C target=snapshot version_stamp=my_date
-
 Using the snapshot option (-s, --snapshot) to build a release snapshot:
-$ catalyst -s 20071121
+$ catalyst -s <git treeish>
 
 Using the specfile option (-f, --file) to build a stage target:
 $ catalyst -f stage1-specfile.spec"""
@@ -298,7 +295,7 @@ def _main(parser, opts):
 
     if opts.snapshot:
         mycmdline.append('target=snapshot')
-        mycmdline.append('version_stamp=' + opts.snapshot)
+        mycmdline.append('snapshot_treeish=' + opts.snapshot)
 
     conf_values['DEBUG'] = opts.debug
     conf_values['VERBOSE'] = opts.debug or opts.verbose
