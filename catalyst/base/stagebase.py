@@ -804,7 +804,7 @@ class StageBase(TargetBase, ClearBase, GenBase):
                             'make.profile')
         make_profile.unlink()
         make_profile.symlink_to(Path('../..',
-                                     self.settings['portdir'],
+                                     self.settings['target_portdir'],
                                      'profiles',
                                      self.settings['target_profile']),
                                 target_is_directory=True)
